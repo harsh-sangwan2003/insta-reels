@@ -3,7 +3,7 @@ import { auth } from '../firebase';
 
 export const AuthContext = React.createContext();
 
-export function AuthProvider({ children }) {
+export function AuthProvider({children}) {
 
     const [user, setUser] = useState('');
     const [loading, setLoading] = useState(false);
@@ -47,9 +47,9 @@ export function AuthProvider({ children }) {
     }
 
     return (
+
         <AuthContext.Provider value={store}>
             {!loading && children}
         </AuthContext.Provider>
     )
-
 }

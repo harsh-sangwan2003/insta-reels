@@ -8,8 +8,8 @@ import { CarouselProvider, Slider, Slide, Image } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
-import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
+import { Link, useNavigate } from 'react-router-dom';
 import insta from '../Assets/Instagram.jpg';
 import bg from '../Assets/insta.jpg';
 import img1 from '../Assets/img1.jpg';
@@ -18,13 +18,14 @@ import img3 from '../Assets/img3.jpg';
 import img4 from '../Assets/img4.jpg';
 import img5 from '../Assets/img5.jpg';
 import { AuthContext } from '../Context/AuthContext';
+import { database, storage } from '../firebase';
 
 export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState('');
     const { login } = useContext(AuthContext);
     const history = useNavigate();
 
@@ -35,10 +36,9 @@ export default function Login() {
             setError('');
             setLoading(true);
 
-            let res = await login(email, password);
-
+            const res = await login(email, password);
             setLoading(false);
-            history("/");
+            history('/');
 
         } catch (err) {
 
@@ -49,10 +49,8 @@ export default function Login() {
             }, 3000);
 
             setLoading(false);
-
         }
     }
-
     return (
         <div className='loginWrapper'>
 
@@ -81,6 +79,7 @@ export default function Login() {
             </div>
 
             <div className='loginCard'>
+
                 <Card variant='outlined'>
 
                     <div className='insta-logo'>
@@ -89,11 +88,10 @@ export default function Login() {
 
                     <CardContent>
 
+                        {error !== '' && <Alert severity="error">{error}</Alert>}
 
-                        {error!=='' && <Alert severity="error">{error}</Alert>}
-
-                        <TextField id="outlined-basic" label="Email" variant="outlined" size='small' margin='dense' fullWidth={true} value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <TextField id="outlined-basic" label="Password" variant="outlined" size='small' margin='dense' fullWidth={true} value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <TextField id="outlined-basic" label="Email" variant="outlined" size="small" margin="dense" fullWidth={true} value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <TextField id="outlined-basic" label="Password" variant="outlined" size="small" margin="dense" fullWidth={true} value={password} onChange={(e) => setPassword(e.target.value)} />
 
 
                         <Typography color='primary' variant='subtitle1' className='text2'>
@@ -103,20 +101,21 @@ export default function Login() {
                     </CardContent>
 
                     <CardActions>
-
-                        <Button color="primary" fullWidth={true} variant="contained" disabled={loading} onClick={handleClick}>
+                        <Button variant="contained" color="primary" fullWidth={true} disabled={loading} onClick={handleClick}>
                             Login
                         </Button>
-
                     </CardActions>
 
                 </Card>
 
                 <Card variant='outlined' className='card2'>
-                    <Typography variant='subtitle1' className='text1'>
-                        Don't have an account ? <Link to="/signup" style={{ textDecoration: 'none' }}>Sign Up</Link>
-                    </Typography>
+                    <CardContent>
+                        <Typography className='text1' variant='subtitle1'>
+                            Don't have an account? <Link to="/signup" style={{ textDecoration: 'none' }}>Sign Up</Link>
+                        </Typography>
+                    </CardContent>
                 </Card>
+
             </div>
         </div>
     );

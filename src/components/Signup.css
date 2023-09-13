@@ -7,18 +7,17 @@
 .signupCard {
 
     width: 27vw;
-    margin-top: 5%;
+    margin-top: 3%;
 }
 
 .insta-logo {
 
     width: 100%;
+    margin-top: 3%;
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    margin-top: 3%;
 }
 
 .insta-logo img {
@@ -34,12 +33,12 @@
 
 .card2 {
 
-    height: 2rem;
+    height: 7vh;
     margin-top: 2%;
 }
 
-@media only screen and (max-width:420px){
-
+@media screen and (max-width:620px) {
+    
     .signupCard{
 
         width:60%;

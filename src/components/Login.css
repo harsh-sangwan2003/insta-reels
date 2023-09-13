@@ -13,12 +13,11 @@
 .insta-logo {
 
     width: 100%;
+    margin-top: 3%;
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    margin-top: 3%;
 }
 
 .insta-logo img {
@@ -39,7 +38,7 @@
 
 .card2 {
 
-    height: 2rem;
+    height: 7vh;
     margin-top: 2%;
 }
 
@@ -48,7 +47,7 @@
     height: 590px;
     width: 441px;
 
-    margin-top: 10vh;
+    margin-top: 8vh;
 
     position: relative;
 }
@@ -59,6 +58,6 @@
     width: 241px;
 
     position: absolute;
-    left: 142px;
-    top: 93px;
+    top: 90px;
+    left: 143px;
 }

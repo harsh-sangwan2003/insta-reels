@@ -7,9 +7,9 @@ import { Button, CardActions } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
 import MovieIcon from '@mui/icons-material/Movie';
-import { Link, useNavigate } from 'react-router-dom';
 import './Signup.css';
 import insta from '../Assets/Instagram.jpg';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext';
 import { database, storage } from '../firebase';
 
@@ -24,16 +24,16 @@ export default function Signup() {
     const { signup } = useContext(AuthContext);
     const history = useNavigate();
 
-    const handleClick = async () => {
+    const handleChange = async () => {
 
         if (file === null) {
 
-            setError('Please upload profile iage first.');
+            setError('Please upload a profile image!');
 
             setTimeout(() => {
-
                 setError('');
             }, 3000);
+
 
             return;
         }
@@ -43,10 +43,10 @@ export default function Signup() {
             setError('');
             setLoading(true);
 
-            let userObj = await signup(email, password);
+            const userObj = await signup(email, password);
             let uid = userObj.user.uid;
 
-            const uploadTask = storage.ref(`/users/${uid}/profileImage`).put(file);
+            const uploadTask = storage.ref(`/users/${uid}/ProfileImage`).put(file);
             uploadTask.on('state_changed', fn1, fn2, fn3);
 
             function fn1(snapshot) {
@@ -57,7 +57,7 @@ export default function Signup() {
 
             function fn2(err) {
 
-                setError(err);
+                setError('Please upload a profile image!');
 
                 setTimeout(() => {
                     setError('');
@@ -68,7 +68,7 @@ export default function Signup() {
 
             function fn3() {
 
-                uploadTask.snapshot.ref.getDownloadURL().then(url => {
+                uploadTask.snapshot.ref.getDownloadURL().then((url) => {
 
                     database.users.doc(uid).set({
 
@@ -78,10 +78,12 @@ export default function Signup() {
                         profileUrl: url,
                         createdAt: database.getTimeStamp()
                     })
+
+                    console.log(url);
                 })
 
                 setLoading(false);
-                history("/");
+                history('/');
             }
 
         } catch (err) {
@@ -92,14 +94,14 @@ export default function Signup() {
                 setError('');
             }, 3000);
 
-            setLoading(false);
 
         }
-
     }
+
     return (
         <div className='signupWrapper'>
             <div className='signupCard'>
+
                 <Card variant='outlined'>
 
                     <div className='insta-logo'>
@@ -108,43 +110,43 @@ export default function Signup() {
 
                     <CardContent>
 
-                        <Typography variant="subtitle1" className="text1" >
-                            Sign up to see photos and videos from your friends
+                        <Typography className='text1' variant="subtitle1">
+                            Sign up to see photos and videos from your friends.
                         </Typography>
 
                         {error !== '' && <Alert severity="error">{error}</Alert>}
 
-                        <TextField id="outlined-basic" label="Email" variant="outlined" size='small' margin='dense' fullWidth={true} value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <TextField id="outlined-basic" label="Password" variant="outlined" size='small' margin='dense' fullWidth={true} value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <TextField id="outlined-basic" label="Full Name" variant="outlined" size='small' margin='dense' fullWidth={true} value={name} onChange={(e) => setName(e.target.value)} />
+                        <TextField id="outlined-basic" label="Email" variant="outlined" size="small" margin="dense" fullWidth={true} value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <TextField id="outlined-basic" label="Password" variant="outlined" size="small" margin="dense" fullWidth={true} value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <TextField id="outlined-basic" label="Full Name" variant="outlined" size="small" margin="dense" fullWidth={true} value={name} onChange={(e) => setName(e.target.value)} />
 
-                        <Button margin="dense" color="secondary" variant='outlined' fullWidth={true} startIcon={<MovieIcon />} component="label">
+                        <Button variant='outlined' margin="dense" size='small' color='secondary' fullWidth={true} component="label" startIcon={<MovieIcon />}>
                             Upload Profile Image
-                            <input type="file" accept="image/*" hidden onChange={(e) => setFile(e.target.files[0])} />
+                            <input type="file" accept='image/*' hidden onChange={(e) => setFile(e.target.files[0])} />
                         </Button>
-
                     </CardContent>
 
                     <CardActions>
-
-                        <Button color="primary" fullWidth={true} variant="contained" disabled={loading} onClick={handleClick}>
+                        <Button variant="contained" color="primary" fullWidth={true} disabled={loading} onClick={handleChange}>
                             Sign Up
                         </Button>
-
                     </CardActions>
 
                     <CardContent>
-                        <Typography variant='subtitle1' className='text1'>
-                            By signing up, you agree to our terms, conditions and cookies policy
+                        <Typography className='text1' variant='subtitle1'>
+                            By signing up, you agree to our Terms, Data Policy and Cookies Policy
                         </Typography>
                     </CardContent>
                 </Card>
 
                 <Card variant='outlined' className='card2'>
-                    <Typography variant='subtitle1' className='text1'>
-                        Having an account ? <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>
-                    </Typography>
+                    <CardContent>
+                        <Typography className='text1' variant='subtitle1'>
+                            Having an account? <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>
+                        </Typography>
+                    </CardContent>
                 </Card>
+
             </div>
         </div>
     );
