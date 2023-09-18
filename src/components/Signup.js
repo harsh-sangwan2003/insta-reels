@@ -139,7 +139,7 @@ export default function Signup() {
                     </CardContent>
                 </Card>
 
-                <Card variant='outlined' className='card2'>
+                <Card variant='outlined'>
                     <CardContent>
                         <Typography className='text1' variant='subtitle1'>
                             Having an account? <Link to="/login" style={{ textDecoration: 'none' }}>Login</Link>

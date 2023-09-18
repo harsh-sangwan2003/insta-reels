@@ -12,17 +12,20 @@ function Video(props) {
 
     const handleScroll = (e) => {
 
+        e.target.muted = true;
+
         let next = ReactDOM.findDOMNode(e.target).parentNode.nextSibling;
 
         if (next) {
             next.scrollIntoView();
             e.target.muted = true;
         }
+
     }
 
     return (
         <div>
-            <video src={props.src} className='video-styling' muted="muted" onClick={handleClick} onEnded={handleScroll}>
+            <video src={props.src} className='video-styling' muted="muted" onClick={handleClick} onEnded={handleScroll} autoPlay>
 
             </video>
         </div>
