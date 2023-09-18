@@ -62,7 +62,4 @@ to run the website
 - [Link](https://app.gemoo.com/share/home?codeId=DW4XB79NQoqeg)
 
 
-
 https://github.com/harsh-sangwan2003/insta-reels/assets/84121947/0e545d2c-fdbc-4687-b113-077a3898a3ea.mp4
-
-
