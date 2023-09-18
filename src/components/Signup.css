@@ -38,14 +38,14 @@
 }
 
 @media screen and (max-width:620px) {
-    
-    .signupCard{
 
-        width:60%;
+    .signupCard {
+
+        width: 60%;
     }
 
-    .insta-logo img{
+    .insta-logo img {
 
-        width:35%;
+        width: 35%;
     }
 }

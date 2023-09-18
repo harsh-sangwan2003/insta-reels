@@ -80,5 +80,17 @@
 }
 
 .card1 {
-    height: 70vh;
+    height: 65vh;
+    margin-right: 1rem;
+}
+
+.card2 {
+
+    height: 30%;
+    margin-right: 1rem;
+}
+
+.add-comment {
+
+    cursor: pointer;
 }
