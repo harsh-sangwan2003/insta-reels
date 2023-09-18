@@ -24,7 +24,7 @@ function Feed() {
 
     return (
         <>
-            <Navbar />
+            <Navbar userData={userData} />
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
 
                 {/* <div className="comp" style={{ width: '50%' }}>

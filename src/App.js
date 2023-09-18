@@ -16,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<PriavteRoute><Feed /></PriavteRoute>} />
+          <Route path="/profile/:id" element={<PriavteRoute><Profile /></PriavteRoute>} />
         </Routes>
       </Router>
     </AuthProvider>

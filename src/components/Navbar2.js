@@ -1,39 +1,33 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../Context/AuthContext'
+import { AuthContext } from '../Context/AuthContext';
 
-import insta from '../Assets/Instagram.JPG';
-import HomeIcon from '@mui/icons-material/Home';
-import ExploreIcon from '@mui/icons-material/Explore';
-import Avatar from '@mui/material/Avatar';
-
-const useStyles = makeStyles({
-  appb: {
-    background: 'white'
-  }
-})
-
-
-export default function Navbar({ userData }) {
+export default function Navbar2({ userData }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
   const history = useNavigate();
-  const { logout } = React.useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -51,20 +45,23 @@ export default function Navbar({ userData }) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const handleprofile = () => {
-    history(`/profile/${userData.userId}`)
+
+  const handleProfile = () => {
+
+    history(`/profile/${userData.uid}`);
   }
-  const handlebannerclick = () => {
-    history('/')
+
+  const handleLogout = async () => {
+
+    await logout();
+    history('/login');
   }
-  const handlelogout = async () => {
-    await logout()
-    history('/login')
+
+  const handleBannerClick = () => {
+
+    history("/");
   }
-  const handleexplore = () => {
-    let win = window.open('https://www.pepcoding.com', '_blank');
-    win.focus();
-  }
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -82,8 +79,8 @@ export default function Navbar({ userData }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleprofile}><AccountCircleIcon /><p>&nbsp;&nbsp;</p>Profile</MenuItem>
-      <MenuItem onClick={handlelogout}><ExitToAppIcon /><p>&nbsp;&nbsp;</p>Logout</MenuItem>
+      <MenuItem onClick={handleProfile}><AccountCircle /><p>&nbsp;&nbsp;</p>Profile</MenuItem>
+      <MenuItem onClick={handleLogout}><LogoutIcon /><p>&nbsp;&nbsp;</p>My account</MenuItem>
     </Menu>
   );
 
@@ -104,22 +101,49 @@ export default function Navbar({ userData }) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleprofile}><AccountCircleIcon /><p>&nbsp;&nbsp;</p>Profile</MenuItem>
-      <MenuItem onClick={handlelogout}><ExitToAppIcon /><p>&nbsp;&nbsp;</p>Logout</MenuItem>
+      <MenuItem onClick={handleProfile}><AccountCircle /><p>&nbsp;&nbsp;</p>Profile</MenuItem>
+      <MenuItem onClick={handleLogout}><LogoutIcon /><p>&nbsp;&nbsp;</p>My account</MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ background: 'white' }}>
+      <AppBar position="static">
         <Toolbar>
-          <div style={{ marginLeft: '5%' }}>
-            <img src={insta} style={{ width: '20vh' }} onClick={handlebannerclick} />
-          </div>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
+            MUI
+          </Typography>
+
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, color: 'black', alignItems: 'center', marginRight: '4rem' }}>
-            <HomeIcon onClick={handlebannerclick} sx={{ marginRight: '1.5rem', cursor: "pointer" }} />
-            <ExploreIcon onClick={handleexplore} sx={{ marginRight: '1rem', cursor: "pointer" }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="error">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
             <IconButton
               size="large"
               edge="end"
@@ -129,11 +153,10 @@ export default function Navbar({ userData }) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar src={userData?.profileUrl} sx={{ height: '2rem', width: '2rem' }} />
+              <AccountCircle />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-
             <IconButton
               size="large"
               aria-label="show more"
