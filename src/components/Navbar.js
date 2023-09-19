@@ -4,7 +4,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
@@ -14,17 +13,11 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContext'
 
-import insta from '../Assets/Instagram.JPG';
+import insta from '../Assets/Instagram.jpg';
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 import Avatar from '@mui/material/Avatar';
-
-const useStyles = makeStyles({
-  appb: {
-    background: 'white'
-  }
-})
-
+import './Navbar.css';
 
 export default function Navbar({ userData }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -52,14 +45,14 @@ export default function Navbar({ userData }) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const handleprofile = () => {
-    history(`/profile/${userData.userId}`)
+    history(`/profile/${userData.userId}`);
   }
   const handlebannerclick = () => {
-    history('/')
+    history('/');
   }
   const handlelogout = async () => {
-    await logout()
-    history('/login')
+    await logout();
+    history('/login');
   }
   const handleexplore = () => {
     let win = window.open('https://www.pepcoding.com', '_blank');
@@ -111,7 +104,7 @@ export default function Navbar({ userData }) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ background: 'white' }}>
+      <AppBar position="fixed" sx={{background:'white'}}>
         <Toolbar>
           <div style={{ marginLeft: '5%' }}>
             <img src={insta} style={{ width: '20vh' }} onClick={handlebannerclick} />
